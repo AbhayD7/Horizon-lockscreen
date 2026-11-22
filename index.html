@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HORIZON — Living Milestone Lock Screen</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main: #06070a;
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.11);
+    --gold: #f59e0b;
+    --gold-soft: rgba(245, 158, 11, 0.35);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: radial-gradient(circle at 50% 10%, #161b29 0%, #040507 100%);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  /* Left Control Studio */
+  .studio-panel {
+    max-width: 420px;
+    width: 100%;
+    background: rgba(15, 19, 28, 0.78);
+    border: 1px solid var(--glass-border);
+    border-radius: 28px;
+    padding: 28px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+  }
+
+  .studio-panel h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+
+  .studio-panel p.sub {
+    font-size: 0.86rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    margin-bottom: 18px;
+  }
+
+  /* Clean How-To / Quick Start Guide Card */
+  .guide-box {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+  }
+
+  .guide-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.74rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .guide-steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .guide-steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.81rem;
+    color: #cbd5e1;
+    line-height: 1.4;
+  }
+
+  .step-num {
+    min-width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    background: rgba(245, 158, 11, 0.16);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: var(--gold);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .field-group {
+    margin-bottom: 15px;
+  }
+
+  .field-group label {
+    display: block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+
+  .field-group input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--glass-border);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .field-group input:focus {
+    border-color: var(--gold);
+  }
+
+  /* Theme Pills */
+  .theme-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .theme-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 9px 8px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .theme-btn.active {
+    border-color: var(--gold);
+    background: rgba(245, 158, 11, 0.15);
+    font-weight: 600;
+  }
+
+  /* Add Milestone Input */
+  .add-ms-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .add-ms-row input {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--glass-border);
+    color: #fff;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    outline: none;
+  }
+
+  .add-ms-row button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    color: #fff;
+    padding: 0 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .add-ms-row button:hover {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  /* Primary Save & Share CTA */
+  .download-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+    color: #090a0f;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(245, 158, 11, 0.45);
+  }
+
+  /* Right Side: Phone Lock Screen Mockup */
+  .phone-shell {
+    width: 380px;
+    height: 800px;
+    border-radius: 50px;
+    padding: 10px;
+    background: linear-gradient(145deg, #2d3548, #11151f);
+    box-shadow: 0 35px 80px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255,255,255,0.08);
+    position: relative;
+  }
+
+  .lock-screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 42px;
+    background: radial-gradient(circle at 50% 42%, #241709 0%, #07080c 72%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 22px 22px 24px;
+    transition: background 0.5s ease;
+  }
+
+  /* Dynamic Island */
+  .notch {
+    width: 105px;
+    height: 26px;
+    background: #000;
+    border-radius: 99px;
+    margin: 0 auto 12px;
+  }
+
+  /* TOP 35%: Clean OS Clock & Date Safe Zone */
+  .os-header {
+    text-align: center;
+    z-index: 3;
+  }
+
+  .os-date {
+    font-size: 0.92rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.78);
+    letter-spacing: 0.5px;
+  }
+
+  .os-time {
+    font-size: 4.6rem;
+    font-weight: 200;
+    line-height: 1.02;
+    letter-spacing: -2px;
+    color: #ffffff;
+    text-shadow: 0 6px 24px rgba(0,0,0,0.5);
+  }
+
+  /* Daily Task Reminder Pill on Lock Screen */
+  .daily-reminder-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 10px;
+    padding: 5px 12px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.73rem;
+    color: #f1f5f9;
+    max-width: 100%;
+  }
+
+  .reminder-dot {
+    min-width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold);
+  }
+
+  /* CENTERPIECE: Living Solar Horizon Ring */
+  .horizon-stage {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 4px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  .horizon-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  .ring-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 7;
+  }
+
+  .ring-progress {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-dasharray: 565;
+    stroke-dashoffset: 282;
+    filter: drop-shadow(0 0 10px var(--gold));
+    transition: stroke-dashoffset 0.6s cubic-bezier(0.22, 1, 0.36, 1), stroke 0.4s;
+  }
+
+  .horizon-core {
+    text-align: center;
+    z-index: 2;
+  }
+
+  .days-big {
+    font-family: 'Space Mono', monospace;
+    font-size: 2.45rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+  }
+
+  .days-sub {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gold);
+    margin-top: 4px;
+  }
+
+  .live-hms {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+
+  /* BOTTOM: Glass Milestone Dock */
+  .milestone-dock {
+    background: rgba(14, 17, 24, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 26px;
+    padding: 15px;
+    backdrop-filter: blur(18px);
+    z-index: 3;
+  }
+
+  .dock-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .goal-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .pct-pill {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    padding: 3px 9px;
+    border-radius: 99px;
+    background: rgba(245, 158, 11, 0.18);
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .ms-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    max-height: 172px;
+    overflow-y: auto;
+  }
+
+  .ms-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 9px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s, transform 0.15s;
+    gap: 6px;
+  }
+
+  .ms-row:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .ms-row.dragging {
+    opacity: 0.4;
+    border-style: dashed;
+    border-color: var(--gold);
+  }
+
+  .ms-row.done .ms-title {
+    text-decoration: line-through;
+    opacity: 0.52;
+  }
+
+  .ms-left {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.78rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .drag-handle {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.85rem;
+    cursor: grab;
+    padding: 0 2px;
+    user-select: none;
+  }
+
+  .drag-handle:active {
+    cursor: grabbing;
+  }
+
+  .check-dot {
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    color: transparent;
+    flex-shrink: 0;
+  }
+
+  .ms-row.done .check-dot {
+    background: var(--gold);
+    color: #06070a;
+    font-weight: 700;
+  }
+
+  .ms-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ms-right {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+
+  .ms-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    padding: 2px 5px;
+    border-radius: 5px;
+    background: rgba(245, 158, 11, 0.14);
+    color: var(--gold);
+  }
+
+  .ms-row.done .ms-tag {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+  }
+
+  .icon-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.68rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .icon-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+  }
+
+  .icon-btn.locked {
+    border-color: rgba(245, 158, 11, 0.45);
+    background: rgba(245, 158, 11, 0.16);
+    color: var(--gold);
+  }
+
+  .icon-btn.del-btn:hover:not(:disabled) {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #fca5a5;
+  }
+
+  .icon-btn:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+  }
+
+  .bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 14px 0;
+    opacity: 0.6;
+    font-size: 0.85rem;
+  }
+
+  .home-indicator {
+    width: 115px;
+    height: 4px;
+    background: rgba(255,255,255,0.45);
+    border-radius: 99px;
+  }
+
+  /* Save & Share Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 50;
+  }
+
+  .modal-overlay.open {
+    display: flex;
+  }
+
+  .modal-card {
+    max-width: 370px;
+    width: 100%;
+    background: #111622;
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.85);
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .modal-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .close-modal {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+
+  .format-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .fmt-btn {
+    padding: 9px;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255,255,255,0.04);
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .fmt-btn.active {
+    border-color: var(--gold);
+    background: rgba(245, 158, 11, 0.16);
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .share-action-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .share-action-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .modal-status {
+    margin-top: 10px;
+    font-size: 0.78rem;
+    color: var(--gold);
+    text-align: center;
+    min-height: 18px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Customizer Studio Panel -->
+  <div class="studio-panel">
+    <h1>Horizon Lock Screen</h1>
+    <p class="sub">Every milestone brings your horizon closer</p>
+
+    <!-- Quick Start Guide Section -->
+    <div class="guide-box">
+      <div class="guide-header">
+        <span>How It Works</span>
+        <span>3 Simple Steps</span>
+      </div>
+      <ul class="guide-steps">
+        <li>
+          <span class="step-num">1</span>
+          <span><strong>Set Your Horizon:</strong> Enter your goal title, pick a deadline date, and choose an ambient glow theme.</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span><strong>Daily Task Reminders:</strong> Tap tasks to track progress—HORIZON highlights what to do today and sends daily reminders for pending tasks.</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span><strong>Save or Share:</strong> Click <em>Save & Share Lock Screen</em> to download or share your wallpaper as PNG or JPG.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="field-group">
+      <label>Your Mission</label>
+      <input type="text" id="goalInput" value="Launch Dream Project" oninput="syncGoal(this.value)">
+    </div>
+
+    <div class="field-group">
+      <label>Deadline</label>
+      <input type="date" id="dateInput" onchange="syncDate(this.value)">
+    </div>
+
+    <div class="field-group">
+      <label>Atmosphere Theme</label>
+      <div class="theme-row">
+        <button class="theme-btn active" onclick="applyTheme('solar', this)">Solar Gold</button>
+        <button class="theme-btn" onclick="applyTheme('aurora', this)">Aurora Cyan</button>
+        <button class="theme-btn" onclick="applyTheme('nebula', this)">Nebula Rose</button>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Add Custom Milestone</label>
+      <div class="add-ms-row">
+        <input type="text" id="newMsInput" placeholder="e.g., Final Demo Video" onkeydown="if(event.key==='Enter') addMilestone()">
+        <button onclick="addMilestone()">+ Add</button>
+      </div>
+    </div>
+
+    <button class="download-btn" onclick="openShareModal()">
+      <span>⬇ Save & Share Lock Screen</span>
+    </button>
+  </div>
+
+  <!-- Phone Lock Screen Preview -->
+  <div class="phone-shell">
+    <div class="lock-screen" id="lockScreen">
+      <div>
+        <div class="notch"></div>
+        <!-- Top 35% Clean Safe Zone for OS Clock -->
+        <div class="os-header">
+          <div class="os-date" id="osDate">Sunday, November 22</div>
+          <div class="os-time" id="osTime">09:41</div>
+          <!-- Smart Daily Task Reminder Pill -->
+          <div class="daily-reminder-pill">
+            <span class="reminder-dot"></span>
+            <span id="dailyReminderText">Today's Task: Polish UI & User Feedback</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Centerpiece Living Progress Ring -->
+      <div class="horizon-stage">
+        <svg class="horizon-svg" viewBox="0 0 200 200">
+          <circle class="ring-bg" cx="100" cy="100" r="90"></circle>
+          <circle class="ring-progress" id="progressRing" cx="100" cy="100" r="90"></circle>
+        </svg>
+        <div class="horizon-core">
+          <div class="days-big" id="daysLeft">21</div>
+          <div class="days-sub" id="accentLabel">Days Left</div>
+          <div class="live-hms" id="hmsLeft">14h 22m 09s</div>
+        </div>
+      </div>
+
+      <!-- Bottom Interactive Milestones -->
+      <div>
+        <div class="milestone-dock">
+          <div class="dock-top">
+            <span class="goal-label" id="goalDisplay">Launch Dream Project</span>
+            <span class="pct-pill" id="pctBadge">50%</span>
+          </div>
+          <div class="ms-scroll" id="msList">
+            <div class="ms-row done" draggable="true" onclick="toggleMs(this)">
+              <div class="ms-left">
+                <span class="drag-handle">⋮⋮</span>
+                <span class="check-dot">✓</span>
+                <span class="ms-title" data-raw="Blueprint & Core Idea">01. Blueprint & Core Idea</span>
+              </div>
+              <div class="ms-right">
+                <span class="ms-tag">DONE</span>
+                <button class="icon-btn lock-btn" onclick="toggleLock(event, this)" title="Lock / Unlock">🔓</button>
+                <button class="icon-btn del-btn" onclick="deleteMs(event, this)" title="Delete">✕</button>
+              </div>
+            </div>
+            <div class="ms-row done" draggable="true" onclick="toggleMs(this)">
+              <div class="ms-left">
+                <span class="drag-handle">⋮⋮</span>
+                <span class="check-dot">✓</span>
+                <span class="ms-title" data-raw="Build Working Prototype">02. Build Working Prototype</span>
+              </div>
+              <div class="ms-right">
+                <span class="ms-tag">DONE</span>
+                <button class="icon-btn lock-btn" onclick="toggleLock(event, this)" title="Lock / Unlock">🔓</button>
+                <button class="icon-btn del-btn" onclick="deleteMs(event, this)" title="Delete">✕</button>
+              </div>
+            </div>
+            <div class="ms-row" draggable="true" onclick="toggleMs(this)">
+              <div class="ms-left">
+                <span class="drag-handle">⋮⋮</span>
+                <span class="check-dot">✓</span>
+                <span class="ms-title" data-raw="Polish UI & User Feedback">03. Polish UI & User Feedback</span>
+              </div>
+              <div class="ms-right">
+                <span class="ms-tag">DO TODAY</span>
+                <button class="icon-btn lock-btn" onclick="toggleLock(event, this)" title="Lock / Unlock">🔓</button>
+                <button class="icon-btn del-btn" onclick="deleteMs(event, this)" title="Delete">✕</button>
+              </div>
+            </div>
+            <div class="ms-row" draggable="true" onclick="toggleMs(this)">
+              <div class="ms-left">
+                <span class="drag-handle">⋮⋮</span>
+                <span class="check-dot">✓</span>
+                <span class="ms-title" data-raw="Public Launch Day">04. Public Launch Day</span>
+              </div>
+              <div class="ms-right">
+                <span class="ms-tag">PENDING</span>
+                <button class="icon-btn lock-btn" onclick="toggleLock(event, this)" title="Lock / Unlock">🔓</button>
+                <button class="icon-btn del-btn" onclick="deleteMs(event, this)" title="Delete">✕</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-bar">
+          <span>🔦</span>
+          <div class="home-indicator"></div>
+          <span>📷</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Save & Share Options Modal -->
+  <div class="modal-overlay" id="shareModal" onclick="if(event.target===this) closeShareModal()">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Save or Share Lock Screen</h2>
+        <button class="close-modal" onclick="closeShareModal()">×</button>
+      </div>
+
+      <div class="field-group">
+        <label>Select Image Format</label>
+        <div class="format-toggle">
+          <button class="fmt-btn active" id="fmtPngBtn" onclick="setFormat('png')">PNG (Lossless)</button>
+          <button class="fmt-btn" id="fmtJpgBtn" onclick="setFormat('jpg')">JPG (Compact)</button>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="download-btn" onclick="saveWallpaperFile()">
+          <span id="saveBtnLabel">⬇ Save as PNG Wallpaper</span>
+        </button>
+        <button class="share-action-btn" onclick="shareWallpaperFile()">
+          <span id="shareBtnLabel">🔗 Share PNG Image</span>
+        </button>
+      </div>
+      <div class="modal-status" id="modalStatus"></div>
+    </div>
+  </div>
+
+<script>
+  const themes = {
+    solar: {
+      accent: '#f59e0b',
+      bgCenter: '#241709',
+      bg: 'radial-gradient(circle at 50% 42%, #241709 0%, #07080c 72%)'
+    },
+    aurora: {
+      accent: '#38bdf8',
+      bgCenter: '#0a2233',
+      bg: 'radial-gradient(circle at 50% 42%, #0a2233 0%, #06080d 72%)'
+    },
+    nebula: {
+      accent: '#f472b6',
+      bgCenter: '#290e20',
+      bg: 'radial-gradient(circle at 50% 42%, #290e20 0%, #07070c 72%)'
+    }
+  };
+
+  let activeThemeKey = 'solar';
+  let exportFormat = 'png';
+  let draggedRow = null;
+  let targetDate = new Date();
+  targetDate.setDate(targetDate.getDate() + 21);
+  targetDate.setHours(23, 59, 59, 0);
+
+  document.getElementById('dateInput').value = targetDate.toISOString().split('T')[0];
+
+  function syncGoal(val) {
+    document.getElementById('goalDisplay').textContent = val || 'Untitled Mission';
+  }
+
+  function syncDate(val) {
+    if (val) targetDate = new Date(val + 'T23:59:59');
+  }
+
+  function applyTheme(key, btn) {
+    activeThemeKey = key;
+    const t = themes[key];
+    document.documentElement.style.setProperty('--gold', t.accent);
+    document.getElementById('lockScreen').style.background = t.bg;
+    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function toggleMs(row) {
+    row.classList.toggle('done');
+    updateRingAndReminders();
+  }
+
+  function toggleLock(e, btn) {
+    e.stopPropagation();
+    const row = btn.closest('.ms-row');
+    const delBtn = row.querySelector('.del-btn');
+    const isLocked = row.classList.toggle('is-locked');
+    btn.classList.toggle('locked', isLocked);
+    btn.textContent = isLocked ? '🔒' : '🔓';
+    delBtn.disabled = isLocked;
+  }
+
+  function deleteMs(e, btn) {
+    e.stopPropagation();
+    const row = btn.closest('.ms-row');
+    if (row.classList.contains('is-locked')) return;
+    row.remove();
+    updateRingAndReminders();
+  }
+
+  function addMilestone() {
+    const inp = document.getElementById('newMsInput');
+    const text = inp.value.trim();
+    if (!text) return;
+
+    const list = document.getElementById('msList');
+    const row = document.createElement('div');
+    row.className = 'ms-row';
+    row.draggable = true;
+    row.onclick = function() { toggleMs(this); };
+    row.innerHTML = `
+      <div class="ms-left">
+        <span class="drag-handle">⋮⋮</span>
+        <span class="check-dot">✓</span>
+        <span class="ms-title" data-raw="${text.replace(/"/g, '&quot;')}">${text}</span>
+      </div>
+      <div class="ms-right">
+        <span class="ms-tag">PENDING</span>
+        <button class="icon-btn lock-btn" onclick="toggleLock(event, this)" title="Lock / Unlock">🔓</button>
+        <button class="icon-btn del-btn" onclick="deleteMs(event, this)" title="Delete">✕</button>
+      </div>
+    `;
+    attachDragEvents(row);
+    list.appendChild(row);
+    inp.value = '';
+    updateRingAndReminders();
+  }
+
+  // Drag & Drop Up/Down Reordering
+  function attachDragEvents(row) {
+    row.addEventListener('dragstart', () => {
+      draggedRow = row;
+      row.classList.add('dragging');
+    });
+    row.addEventListener('dragend', () => {
+      row.classList.remove('dragging');
+      draggedRow = null;
+      updateRingAndReminders();
+    });
+  }
+
+  const msListEl = document.getElementById('msList');
+  msListEl.querySelectorAll('.ms-row').forEach(attachDragEvents);
+
+  msListEl.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    if (!draggedRow) return;
+    const afterElement = getDragAfterElement(msListEl, e.clientY);
+    if (afterElement == null) {
+      msListEl.appendChild(draggedRow);
+    } else {
+      msListEl.insertBefore(draggedRow, afterElement);
+    }
+  });
+
+  function getDragAfterElement(container, y) {
+    const draggableElements = [...container.querySelectorAll('.ms-row:not(.dragging)')];
+    return draggableElements.reduce((closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) {
+        return { offset: offset, element: child };
+      } else {
+        return closest;
+      }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+  }
+
+  // Updates numbering, progress ring, task tags (DONE / DO TODAY / PENDING), and Daily Reminder
+  function updateRingAndReminders() {
+    const all = document.querySelectorAll('.ms-row');
+    const done = document.querySelectorAll('.ms-row.done');
+    const pct = all.length ? Math.round((done.length / all.length) * 100) : 0;
+
+    document.getElementById('pctBadge').textContent = `${pct}%`;
+    const circumference = 565;
+    const offset = circumference - (pct / 100) * circumference;
+    document.getElementById('progressRing').style.strokeDashoffset = offset;
+
+    let foundNext = false;
+    let nextTaskTitle = '';
+
+    all.forEach((row, index) => {
+      const tag = row.querySelector('.ms-tag');
+      const titleEl = row.querySelector('.ms-title');
+      const rawTitle = titleEl.getAttribute('data-raw') || titleEl.textContent.replace(/^\d+\.\s*/, '');
+      const numPrefix = String(index + 1).padStart(2, '0');
+      titleEl.textContent = `${numPrefix}. ${rawTitle}`;
+
+      if (row.classList.contains('done')) {
+        tag.textContent = 'DONE';
+      } else if (!foundNext) {
+        tag.textContent = 'DO TODAY';
+        nextTaskTitle = rawTitle;
+        foundNext = true;
+      } else {
+        tag.textContent = 'PENDING';
+      }
+    });
+
+    const reminderEl = document.getElementById('dailyReminderText');
+    if (all.length === 0) {
+      reminderEl.textContent = `Add a milestone to begin`;
+    } else if (nextTaskTitle) {
+      reminderEl.textContent = `Today's Task: ${nextTaskTitle}`;
+    } else {
+      reminderEl.textContent = `All Tasks Complete — Ready to Launch!`;
+    }
+  }
+
+  // Backend Daily Task Reminder Engine (Runs silently in background)
+  function startDailyReminderEngine() {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+    setInterval(() => {
+      const nextRow = document.querySelector('.ms-row:not(.done) .ms-title');
+      if (nextRow && 'Notification' in window && Notification.permission === 'granted') {
+        const cleanTask = nextRow.getAttribute('data-raw') || nextRow.textContent.replace(/^\d+\.\s*/, '');
+        new Notification('HORIZON — Daily Task Reminder', {
+          body: `Task for Today: ${cleanTask} (Incomplete)`
+        });
+      }
+    }, 86400000);
+  }
+
+  function tick() {
+    const now = new Date();
+    document.getElementById('osTime').textContent =
+      `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    document.getElementById('osDate').textContent =
+      now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+
+    const diff = Math.max(0, targetDate - now);
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / 1000 / 60) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    document.getElementById('daysLeft').textContent = String(d).padStart(2, '0');
+    document.getElementById('hmsLeft').textContent =
+      `${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+  }
+
+  // Build High-Res Wallpaper Canvas (1080x2340)
+  function generateWallpaperCanvas() {
+    const theme = themes[activeThemeKey];
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 2340;
+    const ctx = canvas.getContext('2d');
+
+    const grad = ctx.createRadialGradient(540, 980, 60, 540, 980, 1200);
+    grad.addColorStop(0, theme.bgCenter);
+    grad.addColorStop(1, '#06070a');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 1080, 2340);
+
+    ctx.fillStyle = 'rgba(255,255,255,0.22)';
+    ctx.font = '500 26px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('HORIZON COUNTDOWN LOCK SCREEN', 540, 140);
+
+    ctx.fillStyle = theme.accent;
+    ctx.font = '600 28px sans-serif';
+    ctx.fillText(document.getElementById('dailyReminderText').textContent, 540, 650);
+
+    const all = document.querySelectorAll('.ms-row');
+    const done = document.querySelectorAll('.ms-row.done');
+    const pct = all.length ? done.length / all.length : 0;
+
+    ctx.beginPath();
+    ctx.arc(540, 1020, 240, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 22;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(540, 1020, 240, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * pct);
+    ctx.strokeStyle = theme.accent;
+    ctx.lineWidth = 22;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 130px monospace';
+    ctx.fillText(document.getElementById('daysLeft').textContent, 540, 1045);
+
+    ctx.fillStyle = theme.accent;
+    ctx.font = 'bold 32px sans-serif';
+    ctx.fillText('DAYS REMAINING', 540, 1115);
+
+    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+    ctx.beginPath();
+    ctx.roundRect(90, 1420, 900, 680, 56);
+    ctx.fill();
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 46px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(document.getElementById('goalDisplay').textContent, 150, 1515);
+
+    ctx.fillStyle = theme.accent;
+    ctx.textAlign = 'right';
+    ctx.fillText(`${Math.round(pct * 100)}%`, 930, 1515);
+
+    ctx.textAlign = 'left';
+    let y = 1615;
+    all.forEach((row) => {
+      const isDone = row.classList.contains('done');
+      const title = row.querySelector('.ms-title').textContent;
+      ctx.fillStyle = isDone ? theme.accent : 'rgba(255,255,255,0.85)';
+      ctx.font = '400 36px sans-serif';
+      ctx.fillText(`${isDone ? '●' : '○'}  ${title}`, 150, y);
+      y += 95;
+    });
+
+    return canvas;
+  }
+
+  function openShareModal() {
+    document.getElementById('modalStatus').textContent = '';
+    document.getElementById('shareModal').classList.add('open');
+  }
+
+  function closeShareModal() {
+    document.getElementById('shareModal').classList.remove('open');
+  }
+
+  function setFormat(fmt) {
+    exportFormat = fmt;
+    const upper = fmt.toUpperCase();
+    document.getElementById('fmtPngBtn').classList.toggle('active', fmt === 'png');
+    document.getElementById('fmtJpgBtn').classList.toggle('active', fmt === 'jpg');
+    document.getElementById('saveBtnLabel').textContent = `⬇ Save as ${upper} Wallpaper`;
+    document.getElementById('shareBtnLabel').textContent = `🔗 Share ${upper} Image`;
+  }
+
+  function saveWallpaperFile() {
+    const canvas = generateWallpaperCanvas();
+    const mime = exportFormat === 'jpg' ? 'image/jpeg' : 'image/png';
+    const link = document.createElement('a');
+    link.download = `Horizon-LockScreen.${exportFormat}`;
+    link.href = canvas.toDataURL(mime, 0.95);
+    link.click();
+    document.getElementById('modalStatus').textContent = `Saved Horizon-LockScreen.${exportFormat}!`;
+  }
+
+  function shareWallpaperFile() {
+    const canvas = generateWallpaperCanvas();
+    const mime = exportFormat === 'jpg' ? 'image/jpeg' : 'image/png';
+    const fileName = `Horizon-LockScreen.${exportFormat}`;
+    const goal = document.getElementById('goalDisplay').textContent;
+    const days = document.getElementById('daysLeft').textContent;
+
+    canvas.toBlob(async (blob) => {
+      const file = new File([blob], fileName, { type: mime });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            title: `${goal} — HORIZON`,
+            text: `${goal} (${days} days left)`,
+            files: [file]
+          });
+          document.getElementById('modalStatus').textContent = `Shared ${fileName}!`;
+          return;
+        } catch (err) {}
+      }
+      saveWallpaperFile();
+      document.getElementById('modalStatus').textContent = `Downloaded ${fileName} (ready to share)!`;
+    }, mime, 0.95);
+  }
+
+  setInterval(tick, 1000);
+  tick();
+  updateRingAndReminders();
+  startDailyReminderEngine();
+</script>
+</body>
+</html>
